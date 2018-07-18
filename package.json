@@ -16,6 +16,7 @@
   "author": "Kevin Julián Martínez Escobar",
   "license": "ISC",
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "next": "^6.1.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
