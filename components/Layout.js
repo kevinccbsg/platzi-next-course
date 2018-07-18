@@ -1,10 +1,14 @@
 import Link from 'next/link';
+import Head from 'next/head';
 
 export default class Layout extends React.Component {
   render() {
     const { children } = this.props
     return (
       <div>
+        <Head>
+          <title>Podcast | platzi</title>
+        </Head>
         <header>
           <Link href="/">
             <a className="home-link">
