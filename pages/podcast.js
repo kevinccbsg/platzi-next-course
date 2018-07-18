@@ -1,3 +1,4 @@
+import channel from "./channel";
 
 
 export default class extends React.Component {

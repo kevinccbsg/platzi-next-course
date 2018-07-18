@@ -1,5 +1,7 @@
 import 'isomorphic-fetch';
 import Link from 'next/link';
+import Layout from '../components/Layout';
+
 
 // prefetch no carga getInitialProps!!! y solo funciona en modo start o producción
 
@@ -14,20 +16,17 @@ export default class extends React.Component {
   render() {
     const { channels } = this.props;
     return (
-      <div>
-        <header>Podcasts</header>
-
+      <Layout title="Podcast">
         <div className="channels">
           {channels.map((channel) => (
             <Link href={`/channel?id=${channel.id}`}>
               <a className="channel" key={channel.id}>
-                <img src={channel.urls.logo_image.original} alt=""/>
+                <img src={channel.urls.logo_image.original} alt="" />
                 <h2>{channel.title}</h2>
               </a>
             </Link>
           ))}
         </div>
-
         <style jsx>{`
           header {
             color: #fff;
@@ -60,15 +59,7 @@ export default class extends React.Component {
             text-align: center;
           }
         `}</style>
-
-        <style jsx global>{`
-          body {
-            margin: 0;
-            font-family: system-ui;
-            background: white;
-          }
-        `}</style>
-      </div>
-    );
+      </Layout>
+    )
   }
 }
