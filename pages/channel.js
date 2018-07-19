@@ -1,10 +1,17 @@
 import 'isomorphic-fetch';
-import Link from 'next/link'
+import PodcastListWithClick from '../components/PodcastListWithClick';
 import Layout from '../components/Layout';
 import ChannelGrid from '../components/ChannelGrid';
 import Error from './_error';
 
 export default class extends React.Component {
+
+  constructor(props) {
+    super()
+    this.state = {
+      openPodcast: null,
+    }
+  }
 
   static async getInitialProps({ query, res }) {
     const idChannel = query.id
@@ -36,13 +43,24 @@ export default class extends React.Component {
     }
   }
 
+  openPodcast = (evt, podcast) => {
+    evt.preventDefault()
+    this.setState({ openPodcast: podcast })
+  }
+
   render () {
     const { channel, audioClips, series, statusCode } = this.props
+    const { openPodcast } = this.state
     if (statusCode !== 200) {
       return <Error statusCode={statusCode} />
     }
     return (
       <Layout title="Podcast">
+
+        {openPodcast && (
+          <div>Hay un podcast abierto</div>
+        )}
+
         <h1>{channel.title}</h1>
         {(series.length > 0) && (
           <div>
@@ -51,11 +69,10 @@ export default class extends React.Component {
           </div>
         )}
         <h2>Ultimos Podcasts</h2>
-        {audioClips.map((clip) => (
-          <Link href={`/podcast?id=${clip.id}`}>
-            <div className="podcast" key={clip.id}>{clip.title}</div>
-          </Link>
-        ))}
+        <PodcastListWithClick
+          podcasts={audioClips}
+          onClickPodcast={this.openPodcast}
+        />
         <style jsx>{`
           .podcast {
             display: block;
