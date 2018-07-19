@@ -1,9 +1,16 @@
-import Link from 'next/link';
+import slug from 'slug'
+import { Link } from '../routes'
 
 const ChannelGrid = ({ channels }) => (
   <div className="channels">
     {channels.map((channel) => (
-      <Link href={`/channel?id=${channel.id}`}>
+      <Link
+        route='channel'
+        params={{
+          slug: slug(channel.title),
+          id: channel.id,
+        }}
+      >
         <a className="channel" key={channel.id}>
           <img src={channel.urls.logo_image.original} alt="" />
           <h2>{channel.title}</h2>
