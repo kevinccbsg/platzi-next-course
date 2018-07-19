@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import PodcastPlayer from '../components/PodcastPlayer';
 import PodcastListWithClick from '../components/PodcastListWithClick';
 import Layout from '../components/Layout';
 import ChannelGrid from '../components/ChannelGrid';
@@ -48,6 +49,8 @@ export default class extends React.Component {
     this.setState({ openPodcast: podcast })
   }
 
+  closePodcast = () => this.setState({ openPodcast: null })
+
   render () {
     const { channel, audioClips, series, statusCode } = this.props
     const { openPodcast } = this.state
@@ -58,7 +61,7 @@ export default class extends React.Component {
       <Layout title="Podcast">
 
         {openPodcast && (
-          <div>Hay un podcast abierto</div>
+          <PodcastPlayer clip={openPodcast} onClose={this.closePodcast} />
         )}
 
         <h1>{channel.title}</h1>
