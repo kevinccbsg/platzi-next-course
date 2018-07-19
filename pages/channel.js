@@ -1,6 +1,8 @@
-import Link from 'next/link';
+import 'isomorphic-fetch';
+import Link from 'next/link'
 import Layout from '../components/Layout';
 import ChannelGrid from '../components/ChannelGrid';
+import Error from './_error';
 
 export default class extends React.Component {
 
@@ -12,7 +14,7 @@ export default class extends React.Component {
         fetch(`https://api.audioboom.com/channels/${idChannel}/child_channels`),
         fetch(`https://api.audioboom.com/channels/${idChannel}/audio_clips`)
       ])
-      const status = dataChannel.status;
+      const status = reqChannel.status;
       if (status >= 400) {
         res.statusCode = status;
         return { statusCode: status, channel: null, audioClips: null, series: null }  
@@ -29,7 +31,8 @@ export default class extends React.Component {
       return { channel, audioClips, series, statusCode: 200 }
     } catch (e) {
       res.statusCode = 503;
-      return { statusCode: 503, channel: null, audioClips: null, series: null }
+      console.log(e);
+      return { error: idChannel, statusCode: 503, channel: null, audioClips: null, series: null }
     }
   }
 
